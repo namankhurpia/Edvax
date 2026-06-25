@@ -170,10 +170,21 @@ export const caseStudies = [
 ]
 
 export const mentors = [
-  { id: 1, name: 'CA Rohit Mehra', title: 'Indirect Tax & GST Litigation', initials: 'RM' },
-  { id: 2, name: 'Adv. Priya Nair', title: 'Corporate & Securities Law', initials: 'PN' },
-  { id: 3, name: 'CA Abhishek Sanyal', title: 'Direct Tax & Audit', initials: 'AS' },
-  { id: 4, name: 'Dr. Priyanka Taktawala', title: 'Securities Regulation', initials: 'PT' },
+  {
+    id: 1,
+    name: 'Palash Khurpia',
+    qualifications: 'M.Com, LLB, LLM',
+    title: 'Taxation Lawyer · Speaker on GST Laws · Litigation Enthusiast',
+    role: 'Founder & Owner',
+    initials: 'PK',
+  },
+  {
+    id: 2,
+    name: 'Bhupesh Khurpia',
+    qualifications: 'M.Com, LLB',
+    title: 'Taxation Lawyer',
+    initials: 'BK',
+  },
 ]
 
 export const formatINR = (n) =>

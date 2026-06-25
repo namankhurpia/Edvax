@@ -107,13 +107,19 @@ export default function Home() {
       {/* Mentors */}
       <section className="bg-navy-900 py-16 text-white lg:py-20">
         <div className="container-edvax">
-          <SectionHeading center eyebrow="Mentors" title="Learn from practitioners" />
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <SectionHeading dark center eyebrow="Mentors" title="Learn from practitioners" />
+          <div className="mx-auto mt-12 grid max-w-3xl gap-6 sm:grid-cols-2">
             {mentors.map((m) => (
-              <div key={m.id} className="rounded-xl bg-navy-800/60 p-6 text-center ring-1 ring-white/10">
+              <div key={m.id} className="rounded-xl bg-navy-800/60 p-7 text-center ring-1 ring-white/10">
                 <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-gold font-serif text-xl font-bold text-navy-900">{m.initials}</div>
-                <h3 className="mt-4 font-semibold text-white">{m.name}</h3>
-                <p className="mt-1 text-sm text-navy-100/70">{m.title}</p>
+                {m.role && (
+                  <span className="mt-4 inline-block rounded-full bg-gold/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-gold-soft">{m.role}</span>
+                )}
+                <h3 className={`${m.role ? 'mt-2' : 'mt-4'} font-serif text-lg font-bold text-white`}>{m.name}</h3>
+                {m.qualifications && (
+                  <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-gold-soft">{m.qualifications}</p>
+                )}
+                <p className="mt-2 text-sm text-navy-100/75">{m.title}</p>
               </div>
             ))}
           </div>
