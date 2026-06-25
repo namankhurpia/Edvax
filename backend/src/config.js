@@ -13,6 +13,9 @@ export const config = {
   port: parseInt(process.env.PORT || '4000', 10),
   nodeEnv: process.env.NODE_ENV || 'development',
   isProd: (process.env.NODE_ENV || 'development') === 'production',
+  // Mark the auth cookie Secure (HTTPS-only) only when explicitly enabled.
+  // Default off so production-over-HTTP (bare IP, no TLS) still keeps you logged in.
+  cookieSecure: process.env.COOKIE_SECURE === 'true',
   corsOrigins: (process.env.CORS_ORIGIN || 'http://localhost:5173')
     .split(',')
     .map((s) => s.trim()),

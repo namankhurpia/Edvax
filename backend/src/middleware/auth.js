@@ -10,7 +10,10 @@ export function setAuthCookie(res, user) {
   )
   res.cookie('edvax_token', token, {
     httpOnly: true,
-    secure: config.isProd,
+    // Only mark Secure when actually serving over HTTPS. On plain HTTP (e.g. a
+    // bare IP with no TLS yet) a Secure cookie is never sent back by the browser,
+    // which breaks admin auth. Controlled by COOKIE_SECURE, default off.
+    secure: config.cookieSecure,
     sameSite: 'lax',
     maxAge: 7 * 24 * 60 * 60 * 1000,
   })
