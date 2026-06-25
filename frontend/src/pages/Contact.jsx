@@ -6,8 +6,9 @@ export default function Contact() {
   return (
     <div className="container-edvax grid gap-12 py-14 lg:grid-cols-2">
       <div>
-        <SectionHeading eyebrow="Contact" title="We'd love to hear from you" subtitle="Questions about a course, a partnership, or applying as a mentor? Reach out." />
+        <SectionHeading eyebrow="Contact" title="We'd love to hear from you" subtitle="Questions about a course or a payment? Reach out and we'll be glad to help." />
         <div className="mt-8 space-y-4 text-sm text-ink-soft">
+          <p><span className="font-semibold text-ink">Contact:</span> Palash Khurpia</p>
           <p><span className="font-semibold text-ink">Email:</span> <a href="mailto:edvax.info@gmail.com" className="text-gold-dark hover:underline">edvax.info@gmail.com</a></p>
           <p><span className="font-semibold text-ink">Phone:</span> <a href="tel:+919826804435" className="text-gold-dark hover:underline">+91 98268 04435</a></p>
           <p><span className="font-semibold text-ink">Hours:</span> Mon–Sat, 10am – 6pm IST</p>

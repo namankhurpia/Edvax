@@ -9,6 +9,9 @@ import Blog from './pages/Blog.jsx'
 import PostDetail from './pages/PostDetail.jsx'
 import About from './pages/About.jsx'
 import Contact from './pages/Contact.jsx'
+import RefundPolicy from './pages/RefundPolicy.jsx'
+import PrivacyPolicy from './pages/PrivacyPolicy.jsx'
+import Terms from './pages/Terms.jsx'
 import NotFound from './pages/NotFound.jsx'
 
 import RequireAdmin from './admin/RequireAdmin.jsx'
@@ -31,6 +34,9 @@ function PublicApp() {
         <Route path="/blog/:slug" element={<PostDetail />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/refund-policy" element={<RefundPolicy />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<Terms />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Layout>

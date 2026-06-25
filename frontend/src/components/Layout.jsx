@@ -111,6 +111,7 @@ export default function Layout({ children }) {
               <li><Link to="/contact" className="hover:text-white">Contact</Link></li>
               <li><Link to="/refund-policy" className="hover:text-white">Refund Policy</Link></li>
               <li><Link to="/privacy" className="hover:text-white">Privacy Policy</Link></li>
+              <li><Link to="/terms" className="hover:text-white">Terms &amp; Conditions</Link></li>
             </ul>
           </div>
           <div>
