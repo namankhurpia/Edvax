@@ -53,11 +53,32 @@ services:
     restart: unless-stopped
     depends_on:
       - api
+    # No host ports — Caddy reaches it on the internal network and terminates TLS.
+
+  # Caddy reverse proxy: auto-provisions + renews free Let's Encrypt HTTPS for the
+  # domain in DOMAIN, and proxies all traffic to the web (nginx) container.
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      - web
     ports:
-      - "${WEB_PORT:-80}:80"
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ${DOMAIN:-edvax.in}
+      # Email Let's Encrypt uses for expiry/renewal notices.
+      TLS_EMAIL: ${TLS_EMAIL:-edvax.info@gmail.com}
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data   # stores the issued certificates (persists across updates)
+      - caddy_config:/config
 
 volumes:
   edvax_pgdata:
     # External-style named volume; survives compose down/up and rebuilds.
   edvax_uploads:
     # Uploaded course images; also survives updates/redeploys.
+  caddy_data:
+    # Issued TLS certificates — persist so we don't re-request on every restart.
+  caddy_config:

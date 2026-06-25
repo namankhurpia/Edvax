@@ -1,0 +1,18 @@
+# Caddy config for EDVAX.
+# {$DOMAIN} and {$TLS_EMAIL} come from the caddy service's environment.
+# Caddy automatically obtains + renews a free Let's Encrypt certificate for the
+# domain, terminates HTTPS, and reverse-proxies everything to the web container.
+
+{
+	email {$TLS_EMAIL}
+}
+
+{$DOMAIN} {
+	encode gzip
+	reverse_proxy web:80
+}
+
+# Redirect www -> apex (optional; works only if you add a DNS record for www).
+www.{$DOMAIN} {
+	redir https://{$DOMAIN}{uri} permanent
+}
