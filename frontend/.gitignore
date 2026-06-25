@@ -1,0 +1,9 @@
+node_modules
+dist
+dist2
+dist_*
+dist_check
+.env
+.env.local
+*.log
+.DS_Store

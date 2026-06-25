@@ -1,0 +1,62 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-edvax}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-edvax_password}
+      POSTGRES_DB: ${POSTGRES_DB:-edvax}
+    volumes:
+      # NAMED VOLUME = data persists across `docker compose down`, image rebuilds,
+      # and app updates. This is the guarantee that updates never wipe data.
+      - edvax_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-edvax}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    # DB port NOT published to host by default — only reachable on the internal network.
+
+  api:
+    build: ./backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      DATABASE_URL: postgres://${POSTGRES_USER:-edvax}:${POSTGRES_PASSWORD:-edvax_password}@db:5432/${POSTGRES_DB:-edvax}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      RAZORPAY_KEY_ID: ${RAZORPAY_KEY_ID}
+      RAZORPAY_KEY_SECRET: ${RAZORPAY_KEY_SECRET}
+      RAZORPAY_WEBHOOK_SECRET: ${RAZORPAY_WEBHOOK_SECRET}
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_SECURE: ${SMTP_SECURE:-false}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASS: ${SMTP_PASS}
+      MAIL_FROM: ${MAIL_FROM}
+      UPLOAD_DIR: /app/uploads
+    volumes:
+      # Uploaded course images persist here across updates/redeploys.
+      - edvax_uploads:/app/uploads
+    # API not published either — nginx proxies to it on the internal network.
+
+  web:
+    build: ./frontend
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "${WEB_PORT:-80}:80"
+
+volumes:
+  edvax_pgdata:
+    # External-style named volume; survives compose down/up and rebuilds.
+  edvax_uploads:
+    # Uploaded course images; also survives updates/redeploys.
